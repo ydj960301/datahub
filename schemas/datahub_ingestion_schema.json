@@ -2172,8 +2172,8 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-03-14T19:10:45.121480+00:00",
-                        "start_time": "2023-03-13T00:00:00+00:00",
+                        "end_time": "2023-03-15T08:05:36.668794+00:00",
+                        "start_time": "2023-03-14T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
                             "allow": [
@@ -4169,9 +4169,12 @@
         },
         "kafka-connect_config": {
             "title": "KafkaConnectSourceConfig",
-            "description": "Any non-Dataset source that produces lineage to Datasets should inherit this class.\ne.g. Orchestrators, Pipelines, BI Tools etc.",
+            "description": "Any source that connects to a platform should inherit this class",
             "type": "object",
             "properties": {
+                "stateful_ingestion": {
+                    "$ref": "#/definitions/StatefulStaleMetadataRemovalConfig"
+                },
                 "env": {
                     "title": "Env",
                     "description": "The environment that all assets produced by this connector belong to",
@@ -4185,6 +4188,11 @@
                     "additionalProperties": {
                         "type": "string"
                     }
+                },
+                "platform_instance": {
+                    "title": "Platform Instance",
+                    "description": "The instance of the platform that all assets produced by this recipe belong to",
+                    "type": "string"
                 },
                 "connect_uri": {
                     "title": "Connect Uri",
