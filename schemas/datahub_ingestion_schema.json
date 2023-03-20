@@ -1638,6 +1638,12 @@
                     "default": false,
                     "type": "boolean"
                 },
+                "convert_column_urns_to_lowercase": {
+                    "title": "Convert Column Urns To Lowercase",
+                    "description": "When enabled, converts column URNs to lowercase to ensure cross-platform compatibility. If `target_platform` is Snowflake, the default is True.",
+                    "default": false,
+                    "type": "boolean"
+                },
                 "enable_meta_mapping": {
                     "title": "Enable Meta Mapping",
                     "description": "When enabled, applies the mappings that are defined through the meta_mapping directives.",
@@ -5653,7 +5659,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-03-20T16:13:54.229956+00:00",
+                        "end_time": "2023-03-20T17:45:31.324203+00:00",
                         "start_time": "2023-03-19T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -8107,6 +8113,12 @@
                 "include_env_in_assertion_guid": {
                     "title": "Include Env In Assertion Guid",
                     "description": "Prior to version 0.9.4.2, the assertion GUIDs did not include the environment. If you're using multiple dbt ingestion that are only distinguished by env, then you should set this flag to True.",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "convert_column_urns_to_lowercase": {
+                    "title": "Convert Column Urns To Lowercase",
+                    "description": "When enabled, converts column URNs to lowercase to ensure cross-platform compatibility. If `target_platform` is Snowflake, the default is True.",
                     "default": false,
                     "type": "boolean"
                 },
