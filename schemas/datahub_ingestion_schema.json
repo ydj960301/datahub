@@ -2918,11 +2918,6 @@
                     "description": "PowerBI tenant identifier",
                     "type": "string"
                 },
-                "workspace_id": {
-                    "title": "Workspace Id",
-                    "description": "[deprecated] Use workspace_id_pattern instead",
-                    "type": "string"
-                },
                 "workspace_id_pattern": {
                     "title": "Workspace Id Pattern",
                     "description": "Regex patterns to filter PowerBI workspaces in ingestion",
@@ -2939,23 +2934,14 @@
                         }
                     ]
                 },
-                "dataset_type_mapping": {
-                    "title": "Dataset Type Mapping",
-                    "description": "Mapping of PowerBI datasource type to DataHub supported data-sources. See Quickstart Recipe for mapping",
-                    "anyOf": [
-                        {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        },
-                        {
-                            "type": "object",
-                            "additionalProperties": {
-                                "$ref": "#/definitions/PlatformDetail"
-                            }
-                        }
-                    ]
+                "server_to_platform_instance": {
+                    "title": "Server To Platform Instance",
+                    "description": "A mapping of PowerBI datasource's server i.e host[:port] to Data platform instance. :port is optional and only needed if your datasource server is running on non-standard port.For Google BigQuery the datasource's server is google bigquery project name",
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/PlatformDetail"
+                    }
                 },
                 "client_id": {
                     "title": "Client Id",
@@ -3030,7 +3016,6 @@
             },
             "required": [
                 "tenant_id",
-                "dataset_type_mapping",
                 "client_id",
                 "client_secret"
             ],
@@ -5659,7 +5644,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-03-21T15:24:34.676821+00:00",
+                        "end_time": "2023-03-21T19:13:20.155456+00:00",
                         "start_time": "2023-03-20T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -10989,12 +10974,12 @@
             "properties": {
                 "platform_instance": {
                     "title": "Platform Instance",
-                    "description": "DataHub platform instance name. It should be same as you have used in ingestion receipe of DataHub platform ingestion source of particular platform",
+                    "description": "DataHub platform instance name. To generate correct urn for upstream dataset, this should match with platform instance name used in ingestionrecipe of other datahub sources.",
                     "type": "string"
                 },
                 "env": {
                     "title": "Env",
-                    "description": "The environment that all assets produced by DataHub platform ingestion source belong to",
+                    "description": "The environment that the platform is located in. It is default to PROD",
                     "default": "PROD",
                     "type": "string"
                 }
