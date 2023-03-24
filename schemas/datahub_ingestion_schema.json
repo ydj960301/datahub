@@ -5644,7 +5644,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-03-24T07:52:54.696793+00:00",
+                        "end_time": "2023-03-24T19:31:20.087393+00:00",
                         "start_time": "2023-03-23T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -5722,7 +5722,7 @@
                 "number_of_datasets_process_in_batch_if_profiling_enabled": {
                     "title": "Number Of Datasets Process In Batch If Profiling Enabled",
                     "description": "Number of partitioned table queried in batch when getting metadata. This is a low level config property which should be touched with care. This restriction is needed because we query partitions system view which throws error if we try to touch too many tables.",
-                    "default": 80,
+                    "default": 200,
                     "type": "integer"
                 },
                 "column_limit": {
@@ -5769,7 +5769,7 @@
                 },
                 "extract_lineage_from_catalog": {
                     "title": "Extract Lineage From Catalog",
-                    "description": "This flag enables the data lineage extraction from Data Lineage API exposed by Google Data Catalog. NOTE: This extractor can't build views lineage. It's recommended to enable the view's DDL parsing. Read the docs to have more information about: https://cloud.google.com/data-catalog/docs/reference/data-lineage/rest",
+                    "description": "This flag enables the data lineage extraction from Data Lineage API exposed by Google Data Catalog. NOTE: This extractor can't build views lineage. It's recommended to enable the view's DDL parsing. Read the docs to have more information about: https://cloud.google.com/data-catalog/docs/concepts/about-data-lineage",
                     "default": false,
                     "type": "boolean"
                 },
