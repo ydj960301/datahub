@@ -1507,7 +1507,7 @@
                 "incremental_lineage": {
                     "title": "Incremental Lineage",
                     "description": "When enabled, emits lineage as incremental to existing lineage already in DataHub. When disabled, re-states lineage on each run.",
-                    "default": false,
+                    "default": true,
                     "type": "boolean"
                 },
                 "sql_parser_use_external_process": {
@@ -5644,7 +5644,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-03-24T21:49:53.791133+00:00",
+                        "end_time": "2023-03-24T22:22:58.036060+00:00",
                         "start_time": "2023-03-23T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -7970,7 +7970,7 @@
                 "incremental_lineage": {
                     "title": "Incremental Lineage",
                     "description": "When enabled, emits lineage as incremental to existing lineage already in DataHub. When disabled, re-states lineage on each run.",
-                    "default": false,
+                    "default": true,
                     "type": "boolean"
                 },
                 "sql_parser_use_external_process": {
