@@ -5644,8 +5644,8 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-03-25T00:17:39.958300+00:00",
-                        "start_time": "2023-03-24T00:00:00+00:00",
+                        "end_time": "2023-03-26T23:44:23.848630+00:00",
+                        "start_time": "2023-03-25T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
                             "allow": [
@@ -9610,7 +9610,7 @@
         },
         "looker_config": {
             "title": "LookerDashboardSourceConfig",
-            "description": "Base configuration class for stateful ingestion for source configs to inherit from.",
+            "description": "Any source that is a primary producer of Dataset metadata should inherit this class",
             "type": "object",
             "properties": {
                 "env": {
@@ -9619,13 +9619,13 @@
                     "default": "PROD",
                     "type": "string"
                 },
+                "stateful_ingestion": {
+                    "$ref": "#/definitions/StatefulStaleMetadataRemovalConfig"
+                },
                 "platform_instance": {
                     "title": "Platform Instance",
                     "description": "The instance of the platform that all assets produced by this recipe belong to",
                     "type": "string"
-                },
-                "stateful_ingestion": {
-                    "$ref": "#/definitions/StatefulStaleMetadataRemovalConfig"
                 },
                 "explore_naming_pattern": {
                     "title": "Explore Naming Pattern",
@@ -9907,7 +9907,7 @@
         },
         "lookml_config": {
             "title": "LookMLSourceConfig",
-            "description": "Base configuration class for stateful ingestion for source configs to inherit from.",
+            "description": "Any source that is a primary producer of Dataset metadata should inherit this class",
             "type": "object",
             "properties": {
                 "env": {
@@ -9916,13 +9916,13 @@
                     "default": "PROD",
                     "type": "string"
                 },
+                "stateful_ingestion": {
+                    "$ref": "#/definitions/StatefulStaleMetadataRemovalConfig"
+                },
                 "platform_instance": {
                     "title": "Platform Instance",
                     "description": "The instance of the platform that all assets produced by this recipe belong to",
                     "type": "string"
-                },
-                "stateful_ingestion": {
-                    "$ref": "#/definitions/StatefulStaleMetadataRemovalConfig"
                 },
                 "explore_naming_pattern": {
                     "title": "Explore Naming Pattern",
