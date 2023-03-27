@@ -5644,8 +5644,8 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-03-26T23:44:23.848630+00:00",
-                        "start_time": "2023-03-25T00:00:00+00:00",
+                        "end_time": "2023-03-27T00:11:33.139044+00:00",
+                        "start_time": "2023-03-26T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
                             "allow": [
@@ -9792,7 +9792,7 @@
                 "extract_usage_history": {
                     "title": "Extract Usage History",
                     "description": "Whether to ingest usage statistics for dashboards. Setting this to True will query looker system activity explores to fetch historical dashboard usage.",
-                    "default": false,
+                    "default": true,
                     "type": "boolean"
                 },
                 "extract_usage_history_for_interval": {
