@@ -965,7 +965,7 @@
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "sqlalchemy_uri": {
@@ -2059,7 +2059,7 @@
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "sqlalchemy_uri": {
@@ -2405,7 +2405,7 @@
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "scheme": {
@@ -3338,18 +3338,34 @@
                 },
                 "database": {
                     "title": "Database",
-                    "description": "database (catalog)",
+                    "description": "database (catalog). If set to Null, all databases will be considered for ingestion.",
                     "type": "string"
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "sqlalchemy_uri": {
                     "title": "Sqlalchemy Uri",
                     "description": "URI of database to connect to. See https://docs.sqlalchemy.org/en/14/core/engines.html#database-urls. Takes precedence over other connection parameters.",
                     "type": "string"
+                },
+                "database_pattern": {
+                    "title": "Database Pattern",
+                    "description": "Regex patterns for databases to filter in ingestion.",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
                 },
                 "include_view_lineage": {
                     "title": "Include View Lineage",
@@ -3604,7 +3620,7 @@
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "sqlalchemy_uri": {
@@ -4485,7 +4501,7 @@
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "scheme": {
@@ -4866,7 +4882,7 @@
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "scheme": {
@@ -5108,7 +5124,7 @@
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "sqlalchemy_uri": {
@@ -5334,7 +5350,7 @@
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "sqlalchemy_uri": {
@@ -5644,7 +5660,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-03-28T16:28:36.299697+00:00",
+                        "end_time": "2023-03-28T21:26:05.962281+00:00",
                         "start_time": "2023-03-27T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -6137,7 +6153,7 @@
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "sqlalchemy_uri": {
@@ -6633,7 +6649,7 @@
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "sqlalchemy_uri": {
@@ -7307,7 +7323,7 @@
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "scheme": {
@@ -7528,7 +7544,7 @@
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "sqlalchemy_uri": {
@@ -7737,7 +7753,7 @@
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "scheme": {
@@ -8851,18 +8867,34 @@
                 },
                 "database": {
                     "title": "Database",
-                    "description": "database (catalog)",
+                    "description": "database (catalog). If set to Null, all databases will be considered for ingestion.",
                     "type": "string"
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "sqlalchemy_uri": {
                     "title": "Sqlalchemy Uri",
                     "description": "URI of database to connect to. See https://docs.sqlalchemy.org/en/14/core/engines.html#database-urls. Takes precedence over other connection parameters.",
                     "type": "string"
+                },
+                "database_pattern": {
+                    "title": "Database Pattern",
+                    "description": "Regex patterns for databases to filter in ingestion.",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
                 },
                 "include_view_lineage": {
                     "title": "Include View Lineage",
@@ -9217,12 +9249,12 @@
                 },
                 "database": {
                     "title": "Database",
-                    "description": "database (catalog)",
+                    "description": "database (catalog). If set to Null, all databases will be considered for ingestion.",
                     "type": "string"
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "scheme": {
@@ -9235,6 +9267,22 @@
                     "title": "Sqlalchemy Uri",
                     "description": "URI of database to connect to. See https://docs.sqlalchemy.org/en/14/core/engines.html#database-urls. Takes precedence over other connection parameters.",
                     "type": "string"
+                },
+                "database_pattern": {
+                    "title": "Database Pattern",
+                    "description": "Regex patterns for databases to filter in ingestion.",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
                 },
                 "include_view_lineage": {
                     "title": "Include View Lineage",
@@ -9534,7 +9582,7 @@
                 },
                 "database_alias": {
                     "title": "Database Alias",
-                    "description": "Alias to apply to database when ingesting.",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
                     "type": "string"
                 },
                 "scheme": {
