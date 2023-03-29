@@ -3922,6 +3922,26 @@
             "description": "Config to create a token and connect to Azure AD instance",
             "type": "object",
             "properties": {
+                "env": {
+                    "title": "Env",
+                    "description": "The environment that all assets produced by this connector belong to",
+                    "default": "PROD",
+                    "type": "string"
+                },
+                "platform_instance": {
+                    "title": "Platform Instance",
+                    "description": "The instance of the platform that all assets produced by this recipe belong to",
+                    "type": "string"
+                },
+                "stateful_ingestion": {
+                    "title": "Stateful Ingestion",
+                    "description": "PowerBI Stateful Ingestion Config.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/StatefulStaleMetadataRemovalConfig"
+                        }
+                    ]
+                },
                 "client_id": {
                     "title": "Client Id",
                     "description": "Application ID. Found in your app registration on Azure AD Portal",
@@ -5660,7 +5680,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-03-29T07:45:35.694294+00:00",
+                        "end_time": "2023-03-29T16:51:57.680758+00:00",
                         "start_time": "2023-03-28T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
