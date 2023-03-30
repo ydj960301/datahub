@@ -2695,9 +2695,16 @@
                 },
                 "path": {
                     "title": "Path",
-                    "description": "Path to folder or file to ingest. If pointed to a folder, all files with extension {file_extension} (default json) within that folder will be processed.",
-                    "type": "string",
-                    "format": "path"
+                    "description": "Path to folder or file to ingest. If pointed to a folder, all files with extension {file_extension} (default json) within that folder will be processed. This can also be in the form of a URL containing a single file",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string",
+                            "format": "path"
+                        }
+                    ]
                 },
                 "file_extension": {
                     "title": "File Extension",
@@ -3045,9 +3052,16 @@
             "properties": {
                 "file": {
                     "title": "File",
-                    "description": "Path to business glossary file to ingest.",
-                    "format": "file-path",
-                    "type": "string"
+                    "description": "Path to business glossary file to ingest. This can be in the form of a URL or local file YAML.",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "string",
+                            "format": "path"
+                        }
+                    ]
                 },
                 "enable_auto_id": {
                     "title": "Enable Auto Id",
@@ -5680,7 +5694,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-03-30T00:25:54.497535+00:00",
+                        "end_time": "2023-03-30T01:23:17.043384+00:00",
                         "start_time": "2023-03-29T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -9340,7 +9354,7 @@
             "properties": {
                 "file": {
                     "title": "File",
-                    "description": "Path to lineage file to ingest.",
+                    "description": "Path to lineage file to ingest. This may also be in the form of a URL.",
                     "type": "string"
                 },
                 "preserve_upstream": {
@@ -9379,7 +9393,7 @@
             "properties": {
                 "filename": {
                     "title": "Filename",
-                    "description": "Path to CSV file to ingest",
+                    "description": "Path to CSV file to ingest. It can also be in the form of a URL.",
                     "type": "string"
                 },
                 "write_semantics": {
