@@ -5694,7 +5694,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-03-31T06:42:43.918010+00:00",
+                        "end_time": "2023-03-31T10:47:48.306089+00:00",
                         "start_time": "2023-03-30T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -7008,11 +7008,6 @@
                     "default": "DEFAULT_AUTHENTICATOR",
                     "type": "string"
                 },
-                "host_port": {
-                    "title": "Host Port",
-                    "description": "DEPRECATED: Snowflake account. e.g. abc48144",
-                    "type": "string"
-                },
                 "account_id": {
                     "title": "Account Id",
                     "description": "Snowflake account identifier. e.g. xy12345,  xy12345.us-east-2.aws, xy12345.us-central1.gcp, xy12345.central-us.azure, xy12345.us-west-2.privatelink. Refer [Account Identifiers](https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#format-2-legacy-account-locator-in-a-region) for more details.",
@@ -7159,6 +7154,9 @@
                     ]
                 }
             },
+            "required": [
+                "account_id"
+            ],
             "additionalProperties": false
         },
         "mysql": {
@@ -7904,7 +7902,7 @@
                 },
                 "okta_profile_to_username_attr": {
                     "title": "Okta Profile To Username Attr",
-                    "description": "Which Okta User Profile attribute to use as input to DataHub username mapping.",
+                    "description": "Which Okta User Profile attribute to use as input to DataHub username mapping. Common values used are - login, email.",
                     "default": "login",
                     "type": "string"
                 },
