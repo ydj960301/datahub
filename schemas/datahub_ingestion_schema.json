@@ -5116,7 +5116,7 @@
             ]
         },
         "demo-data_config": {
-            "title": "ConfigModel",
+            "title": "DemoDataConfig",
             "type": "object",
             "properties": {},
             "additionalProperties": false
@@ -9457,7 +9457,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-04-05T06:02:56.565188+00:00",
+                        "end_time": "2023-04-05T06:25:37.653323+00:00",
                         "start_time": "2023-04-04T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
