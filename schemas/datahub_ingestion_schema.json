@@ -9463,7 +9463,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-04-07T18:35:13.715631+00:00",
+                        "end_time": "2023-04-07T19:26:23.931882+00:00",
                         "start_time": "2023-04-06T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -9477,7 +9477,6 @@
                         "include_read_operational_stats": false,
                         "format_sql_queries": false,
                         "include_top_n_queries": true,
-                        "query_log_delay": null,
                         "max_query_duration": 900.0
                     },
                     "allOf": [
@@ -11604,12 +11603,6 @@
                     "description": "Whether to ingest the top_n_queries.",
                     "default": true,
                     "type": "boolean"
-                },
-                "query_log_delay": {
-                    "title": "Query Log Delay",
-                    "description": "To account for the possibility that the query event arrives after the read event in the audit logs, we wait for at least query_log_delay additional events to be processed before attempting to resolve BigQuery job information from the logs. If query_log_delay is None, it gets treated as an unlimited delay, which prioritizes correctness at the expense of memory usage.",
-                    "exclusiveMinimum": 0,
-                    "type": "integer"
                 },
                 "max_query_duration": {
                     "title": "Max Query Duration",
