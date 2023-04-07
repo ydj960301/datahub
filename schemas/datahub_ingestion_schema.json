@@ -6266,8 +6266,18 @@
         },
         "okta_config": {
             "title": "OktaConfig",
+            "description": "Base configuration class for stateful ingestion for source configs to inherit from.",
             "type": "object",
             "properties": {
+                "stateful_ingestion": {
+                    "title": "Stateful Ingestion",
+                    "description": "Okta Stateful Ingestion Config.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/StatefulStaleMetadataRemovalConfig"
+                        }
+                    ]
+                },
                 "okta_domain": {
                     "title": "Okta Domain",
                     "description": "The location of your Okta Domain, without a protocol. Can be found in Okta Developer console. e.g. dev-33231928.okta.com",
@@ -6385,8 +6395,7 @@
             "required": [
                 "okta_domain",
                 "okta_api_token"
-            ],
-            "additionalProperties": false
+            ]
         },
         "powerbi": {
             "type": "object",
@@ -8596,7 +8605,7 @@
                 },
                 "stateful_ingestion": {
                     "title": "Stateful Ingestion",
-                    "description": "PowerBI Stateful Ingestion Config.",
+                    "description": "Azure AD Stateful Ingestion Config.",
                     "allOf": [
                         {
                             "$ref": "#/definitions/StatefulStaleMetadataRemovalConfig"
@@ -9463,7 +9472,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-04-07T20:18:22.436326+00:00",
+                        "end_time": "2023-04-07T20:51:04.229566+00:00",
                         "start_time": "2023-04-06T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
