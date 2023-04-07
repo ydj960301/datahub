@@ -8184,6 +8184,12 @@
                     "default": false,
                     "type": "boolean"
                 },
+                "use_legacy_lineage_method": {
+                    "title": "Use Legacy Lineage Method",
+                    "description": "Whether to use the legacy lineage computation method. If set to False, ingestion uses new optimised lineage extraction method that requires less ingestion process memory.",
+                    "default": true,
+                    "type": "boolean"
+                },
                 "tag_pattern": {
                     "title": "Tag Pattern",
                     "description": "List of regex patterns for tags to include in ingestion. Only used if `extract_tags` is enabled.",
@@ -9457,7 +9463,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-04-07T16:40:09.815528+00:00",
+                        "end_time": "2023-04-07T18:15:19.108447+00:00",
                         "start_time": "2023-04-06T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
