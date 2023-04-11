@@ -2245,6 +2245,12 @@
                     "description": "Whether to extract entire project hierarchy for nested projects.",
                     "default": true,
                     "type": "boolean"
+                },
+                "extract_lineage_from_unsupported_custom_sql_queries": {
+                    "title": "Extract Lineage From Unsupported Custom Sql Queries",
+                    "description": "[Experimental] Whether to extract lineage from unsupported custom sql queries using SQL parsing",
+                    "default": false,
+                    "type": "boolean"
                 }
             },
             "required": [
@@ -9457,7 +9463,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-04-11T17:12:45.998076+00:00",
+                        "end_time": "2023-04-11T18:40:53.750362+00:00",
                         "start_time": "2023-04-10T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -10901,6 +10907,14 @@
                 "platform_override_map": {
                     "title": "Platform Override Map",
                     "description": "A holder for platform -> platform mappings to generate correct dataset urns",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "database_override_map": {
+                    "title": "Database Override Map",
+                    "description": "A holder for database -> database mappings to generate correct dataset urns",
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
