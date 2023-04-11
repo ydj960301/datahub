@@ -8096,12 +8096,6 @@
                     "description": "Connect args to pass to Snowflake SqlAlchemy driver",
                     "type": "object"
                 },
-                "check_role_grants": {
-                    "title": "Check Role Grants",
-                    "description": "Not supported",
-                    "default": false,
-                    "type": "boolean"
-                },
                 "database_pattern": {
                     "title": "Database Pattern",
                     "default": {
@@ -8118,15 +8112,6 @@
                     "allOf": [
                         {
                             "$ref": "#/definitions/AllowDenyPattern"
-                        }
-                    ]
-                },
-                "provision_role": {
-                    "title": "Provision Role",
-                    "description": "Not supported",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/SnowflakeProvisionRoleConfig"
                         }
                     ]
                 },
@@ -9472,7 +9457,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-04-11T00:37:34.409491+00:00",
+                        "end_time": "2023-04-11T08:03:27.169447+00:00",
                         "start_time": "2023-04-10T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -11381,58 +11366,6 @@
                     "type": "string"
                 }
             },
-            "additionalProperties": false
-        },
-        "SnowflakeProvisionRoleConfig": {
-            "title": "SnowflakeProvisionRoleConfig",
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "title": "Enabled",
-                    "description": "Whether provisioning of Snowflake role (used for ingestion) is enabled or not.",
-                    "default": false,
-                    "type": "boolean"
-                },
-                "dry_run": {
-                    "title": "Dry Run",
-                    "description": "If provision_role is enabled, whether to dry run the sql commands for system admins to see what sql grant commands would be run without actually running the grant commands.",
-                    "default": false,
-                    "type": "boolean"
-                },
-                "drop_role_if_exists": {
-                    "title": "Drop Role If Exists",
-                    "description": "Useful during testing to ensure you have a clean slate role. Not recommended for production use cases.",
-                    "default": false,
-                    "type": "boolean"
-                },
-                "run_ingestion": {
-                    "title": "Run Ingestion",
-                    "description": "If system admins wish to skip actual ingestion of metadata during testing of the provisioning of role.",
-                    "default": false,
-                    "type": "boolean"
-                },
-                "admin_role": {
-                    "title": "Admin Role",
-                    "description": "The Snowflake role of admin user used for provisioning of the role specified by role config. System admins can audit the open source code and decide to use a different role.",
-                    "default": "accountadmin",
-                    "type": "string"
-                },
-                "admin_username": {
-                    "title": "Admin Username",
-                    "description": "The username to be used for provisioning of role.",
-                    "type": "string"
-                },
-                "admin_password": {
-                    "title": "Admin Password",
-                    "description": "The password to be used for provisioning of role.",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                }
-            },
-            "required": [
-                "admin_username"
-            ],
             "additionalProperties": false
         },
         "TagOption": {
