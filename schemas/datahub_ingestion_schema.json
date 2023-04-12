@@ -9463,8 +9463,8 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-04-11T23:26:27.459693+00:00",
-                        "start_time": "2023-04-10T00:00:00+00:00",
+                        "end_time": "2023-04-12T06:08:47.342394+00:00",
+                        "start_time": "2023-04-11T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
                             "allow": [
@@ -9569,8 +9569,8 @@
                 },
                 "lineage_use_sql_parser": {
                     "title": "Lineage Use Sql Parser",
-                    "description": "Experimental. Use sql parser to resolve view/table lineage. If there is a view being referenced then bigquery sends both the view as well as underlying tablein the references. There is no distinction between direct/base objects accessed. So doing sql parsing to ensure we only use direct objects accessed for lineage.",
-                    "default": false,
+                    "description": "Use sql parser to resolve view/table lineage. Only invoked on tables with both upstream tables and views. Used to distinguish between direct/base objects accessed, to only emit upstream lineage for directly accessed objects.",
+                    "default": true,
                     "type": "boolean"
                 },
                 "lineage_parse_view_ddl": {
