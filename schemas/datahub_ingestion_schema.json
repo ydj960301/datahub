@@ -2944,6 +2944,369 @@
             },
             "additionalProperties": false
         },
+        "redshift-usage-legacy": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "redshift-usage-legacy"
+                    ]
+                },
+                "config": {
+                    "$ref": "#/definitions/redshift-usage-legacy_config"
+                }
+            },
+            "required": [
+                "type",
+                "config"
+            ]
+        },
+        "redshift-usage-legacy_config": {
+            "title": "RedshiftUsageConfig",
+            "description": "Base configuration class for stateful ingestion for source configs to inherit from.",
+            "type": "object",
+            "properties": {
+                "env": {
+                    "title": "Env",
+                    "description": "The environment that all assets produced by this connector belong to",
+                    "default": "PROD",
+                    "type": "string"
+                },
+                "bucket_duration": {
+                    "description": "Size of the time window to aggregate usage stats.",
+                    "default": "DAY",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/BucketDuration"
+                        }
+                    ]
+                },
+                "end_time": {
+                    "title": "End Time",
+                    "description": "Latest date of usage to consider. Default: Current time in UTC",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "start_time": {
+                    "title": "Start Time",
+                    "description": "Earliest date of usage to consider. Default: Last full day in UTC (or hour, depending on `bucket_duration`)",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "top_n_queries": {
+                    "title": "Top N Queries",
+                    "description": "Number of top queries to save to each table.",
+                    "default": 10,
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                },
+                "user_email_pattern": {
+                    "title": "User Email Pattern",
+                    "description": "regex patterns for user emails to filter in usage.",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
+                },
+                "include_operational_stats": {
+                    "title": "Include Operational Stats",
+                    "description": "Whether to display operational stats.",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "include_read_operational_stats": {
+                    "title": "Include Read Operational Stats",
+                    "description": "Whether to report read operational stats. Experimental.",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "format_sql_queries": {
+                    "title": "Format Sql Queries",
+                    "description": "Whether to format sql queries",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "include_top_n_queries": {
+                    "title": "Include Top N Queries",
+                    "description": "Whether to ingest the top_n_queries.",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "s3_lineage_config": {
+                    "title": "S3 Lineage Config",
+                    "description": "Common config for S3 lineage generation",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/S3LineageProviderConfig"
+                        }
+                    ]
+                },
+                "platform_instance_map": {
+                    "title": "Platform Instance Map",
+                    "description": "A holder for platform -> platform_instance mappings to generate correct dataset urns",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "platform_instance": {
+                    "title": "Platform Instance",
+                    "description": "The instance of the platform that all assets produced by this recipe belong to",
+                    "type": "string"
+                },
+                "stateful_ingestion": {
+                    "$ref": "#/definitions/StatefulStaleMetadataRemovalConfig"
+                },
+                "options": {
+                    "title": "Options",
+                    "description": "Any options specified here will be passed to SQLAlchemy's create_engine as kwargs.See https://docs.sqlalchemy.org/en/14/core/engines.html#sqlalchemy.create_engine for details.",
+                    "default": {},
+                    "type": "object"
+                },
+                "schema_pattern": {
+                    "title": "Schema Pattern",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [
+                            "information_schema"
+                        ],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
+                },
+                "table_pattern": {
+                    "title": "Table Pattern",
+                    "description": "Regex patterns for tables to filter in ingestion. Specify regex to match the entire table name in database.schema.table format. e.g. to match all tables starting with customer in Customer database and public schema, use the regex 'Customer.public.customer.*'",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
+                },
+                "view_pattern": {
+                    "title": "View Pattern",
+                    "description": "Regex patterns for views to filter in ingestion. Note: Defaults to table_pattern if not specified. Specify regex to match the entire view name in database.schema.view format. e.g. to match all views starting with customer in Customer database and public schema, use the regex 'Customer.public.customer.*'",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
+                },
+                "profile_pattern": {
+                    "title": "Profile Pattern",
+                    "description": "Regex patterns to filter tables (or specific columns) for profiling during ingestion. Note that only tables allowed by the `table_pattern` will be considered.",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
+                },
+                "domain": {
+                    "title": "Domain",
+                    "description": "Attach domains to databases, schemas or tables during ingestion using regex patterns. Domain key can be a guid like *urn:li:domain:ec428203-ce86-4db3-985d-5a8ee6df32ba* or a string like \"Marketing\".) If you provide strings, then datahub will attempt to resolve this name to a guid, and will error out if this fails. There can be multiple domain keys specified.",
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/AllowDenyPattern"
+                    }
+                },
+                "include_views": {
+                    "title": "Include Views",
+                    "description": "Whether views should be ingested.",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "include_tables": {
+                    "title": "Include Tables",
+                    "description": "Whether tables should be ingested.",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "include_table_location_lineage": {
+                    "title": "Include Table Location Lineage",
+                    "description": "If the source supports it, include table lineage to the underlying storage location.",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "profiling": {
+                    "title": "Profiling",
+                    "default": {
+                        "enabled": false,
+                        "limit": null,
+                        "offset": null,
+                        "report_dropped_profiles": false,
+                        "turn_off_expensive_profiling_metrics": false,
+                        "profile_table_level_only": false,
+                        "include_field_null_count": true,
+                        "include_field_distinct_count": true,
+                        "include_field_min_value": true,
+                        "include_field_max_value": true,
+                        "include_field_mean_value": true,
+                        "include_field_median_value": true,
+                        "include_field_stddev_value": true,
+                        "include_field_quantiles": false,
+                        "include_field_distinct_value_frequencies": false,
+                        "include_field_histogram": false,
+                        "include_field_sample_values": true,
+                        "field_sample_values_limit": 20,
+                        "max_number_of_fields_to_profile": null,
+                        "profile_if_updated_since_days": null,
+                        "profile_table_size_limit": 5,
+                        "profile_table_row_limit": 5000000,
+                        "profile_table_row_count_estimate_only": false,
+                        "max_workers": 10,
+                        "query_combiner_enabled": true,
+                        "catch_exceptions": true,
+                        "partition_profiling_enabled": true,
+                        "partition_datetime": null
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/GEProfilingConfig"
+                        }
+                    ]
+                },
+                "username": {
+                    "title": "Username",
+                    "description": "username",
+                    "type": "string"
+                },
+                "password": {
+                    "title": "Password",
+                    "description": "password",
+                    "type": "string",
+                    "writeOnly": true,
+                    "format": "password"
+                },
+                "host_port": {
+                    "title": "Host Port",
+                    "description": "host URL",
+                    "type": "string"
+                },
+                "database": {
+                    "title": "Database",
+                    "description": "database (catalog). If set to Null, all databases will be considered for ingestion.",
+                    "type": "string"
+                },
+                "database_alias": {
+                    "title": "Database Alias",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
+                    "type": "string"
+                },
+                "sqlalchemy_uri": {
+                    "title": "Sqlalchemy Uri",
+                    "description": "URI of database to connect to. See https://docs.sqlalchemy.org/en/14/core/engines.html#database-urls. Takes precedence over other connection parameters.",
+                    "type": "string"
+                },
+                "database_pattern": {
+                    "title": "Database Pattern",
+                    "description": "Regex patterns for databases to filter in ingestion.",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
+                },
+                "include_view_lineage": {
+                    "title": "Include View Lineage",
+                    "description": "Include table lineage for views",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "default_schema": {
+                    "title": "Default Schema",
+                    "description": "The default schema to use if the sql parser fails to parse the schema with `sql_based` lineage collector",
+                    "default": "public",
+                    "type": "string"
+                },
+                "include_table_lineage": {
+                    "title": "Include Table Lineage",
+                    "description": "Whether table lineage should be ingested.",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "include_copy_lineage": {
+                    "title": "Include Copy Lineage",
+                    "description": "Whether lineage should be collected from copy commands",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "include_unload_lineage": {
+                    "title": "Include Unload Lineage",
+                    "description": "Whether lineage should be collected from unload commands",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "capture_lineage_query_parser_failures": {
+                    "title": "Capture Lineage Query Parser Failures",
+                    "description": "Whether to capture lineage query parser errors with dataset properties for debuggings",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "table_lineage_mode": {
+                    "description": "Which table lineage collector mode to use. Available modes are: [stl_scan_based, sql_based, mixed]",
+                    "default": "stl_scan_based",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/LineageMode"
+                        }
+                    ]
+                },
+                "email_domain": {
+                    "title": "Email Domain",
+                    "description": "Email domain of your organisation so users can be displayed on UI appropriately.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "host_port",
+                "email_domain"
+            ],
+            "additionalProperties": false
+        },
         "datahub-business-glossary": {
             "type": "object",
             "properties": {
@@ -4395,369 +4758,6 @@
             "required": [
                 "path",
                 "platform"
-            ],
-            "additionalProperties": false
-        },
-        "redshift-usage": {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "type": "string",
-                    "enum": [
-                        "redshift-usage"
-                    ]
-                },
-                "config": {
-                    "$ref": "#/definitions/redshift-usage_config"
-                }
-            },
-            "required": [
-                "type",
-                "config"
-            ]
-        },
-        "redshift-usage_config": {
-            "title": "RedshiftUsageConfig",
-            "description": "Base configuration class for stateful ingestion for source configs to inherit from.",
-            "type": "object",
-            "properties": {
-                "env": {
-                    "title": "Env",
-                    "description": "The environment that all assets produced by this connector belong to",
-                    "default": "PROD",
-                    "type": "string"
-                },
-                "bucket_duration": {
-                    "description": "Size of the time window to aggregate usage stats.",
-                    "default": "DAY",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/BucketDuration"
-                        }
-                    ]
-                },
-                "end_time": {
-                    "title": "End Time",
-                    "description": "Latest date of usage to consider. Default: Current time in UTC",
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "start_time": {
-                    "title": "Start Time",
-                    "description": "Earliest date of usage to consider. Default: Last full day in UTC (or hour, depending on `bucket_duration`)",
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "top_n_queries": {
-                    "title": "Top N Queries",
-                    "description": "Number of top queries to save to each table.",
-                    "default": 10,
-                    "exclusiveMinimum": 0,
-                    "type": "integer"
-                },
-                "user_email_pattern": {
-                    "title": "User Email Pattern",
-                    "description": "regex patterns for user emails to filter in usage.",
-                    "default": {
-                        "allow": [
-                            ".*"
-                        ],
-                        "deny": [],
-                        "ignoreCase": true
-                    },
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/AllowDenyPattern"
-                        }
-                    ]
-                },
-                "include_operational_stats": {
-                    "title": "Include Operational Stats",
-                    "description": "Whether to display operational stats.",
-                    "default": true,
-                    "type": "boolean"
-                },
-                "include_read_operational_stats": {
-                    "title": "Include Read Operational Stats",
-                    "description": "Whether to report read operational stats. Experimental.",
-                    "default": false,
-                    "type": "boolean"
-                },
-                "format_sql_queries": {
-                    "title": "Format Sql Queries",
-                    "description": "Whether to format sql queries",
-                    "default": false,
-                    "type": "boolean"
-                },
-                "include_top_n_queries": {
-                    "title": "Include Top N Queries",
-                    "description": "Whether to ingest the top_n_queries.",
-                    "default": true,
-                    "type": "boolean"
-                },
-                "s3_lineage_config": {
-                    "title": "S3 Lineage Config",
-                    "description": "Common config for S3 lineage generation",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/S3LineageProviderConfig"
-                        }
-                    ]
-                },
-                "platform_instance_map": {
-                    "title": "Platform Instance Map",
-                    "description": "A holder for platform -> platform_instance mappings to generate correct dataset urns",
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
-                "platform_instance": {
-                    "title": "Platform Instance",
-                    "description": "The instance of the platform that all assets produced by this recipe belong to",
-                    "type": "string"
-                },
-                "stateful_ingestion": {
-                    "$ref": "#/definitions/StatefulStaleMetadataRemovalConfig"
-                },
-                "options": {
-                    "title": "Options",
-                    "description": "Any options specified here will be passed to SQLAlchemy's create_engine as kwargs.See https://docs.sqlalchemy.org/en/14/core/engines.html#sqlalchemy.create_engine for details.",
-                    "default": {},
-                    "type": "object"
-                },
-                "schema_pattern": {
-                    "title": "Schema Pattern",
-                    "default": {
-                        "allow": [
-                            ".*"
-                        ],
-                        "deny": [
-                            "information_schema"
-                        ],
-                        "ignoreCase": true
-                    },
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/AllowDenyPattern"
-                        }
-                    ]
-                },
-                "table_pattern": {
-                    "title": "Table Pattern",
-                    "description": "Regex patterns for tables to filter in ingestion. Specify regex to match the entire table name in database.schema.table format. e.g. to match all tables starting with customer in Customer database and public schema, use the regex 'Customer.public.customer.*'",
-                    "default": {
-                        "allow": [
-                            ".*"
-                        ],
-                        "deny": [],
-                        "ignoreCase": true
-                    },
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/AllowDenyPattern"
-                        }
-                    ]
-                },
-                "view_pattern": {
-                    "title": "View Pattern",
-                    "description": "Regex patterns for views to filter in ingestion. Note: Defaults to table_pattern if not specified. Specify regex to match the entire view name in database.schema.view format. e.g. to match all views starting with customer in Customer database and public schema, use the regex 'Customer.public.customer.*'",
-                    "default": {
-                        "allow": [
-                            ".*"
-                        ],
-                        "deny": [],
-                        "ignoreCase": true
-                    },
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/AllowDenyPattern"
-                        }
-                    ]
-                },
-                "profile_pattern": {
-                    "title": "Profile Pattern",
-                    "description": "Regex patterns to filter tables (or specific columns) for profiling during ingestion. Note that only tables allowed by the `table_pattern` will be considered.",
-                    "default": {
-                        "allow": [
-                            ".*"
-                        ],
-                        "deny": [],
-                        "ignoreCase": true
-                    },
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/AllowDenyPattern"
-                        }
-                    ]
-                },
-                "domain": {
-                    "title": "Domain",
-                    "description": "Attach domains to databases, schemas or tables during ingestion using regex patterns. Domain key can be a guid like *urn:li:domain:ec428203-ce86-4db3-985d-5a8ee6df32ba* or a string like \"Marketing\".) If you provide strings, then datahub will attempt to resolve this name to a guid, and will error out if this fails. There can be multiple domain keys specified.",
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": {
-                        "$ref": "#/definitions/AllowDenyPattern"
-                    }
-                },
-                "include_views": {
-                    "title": "Include Views",
-                    "description": "Whether views should be ingested.",
-                    "default": true,
-                    "type": "boolean"
-                },
-                "include_tables": {
-                    "title": "Include Tables",
-                    "description": "Whether tables should be ingested.",
-                    "default": true,
-                    "type": "boolean"
-                },
-                "include_table_location_lineage": {
-                    "title": "Include Table Location Lineage",
-                    "description": "If the source supports it, include table lineage to the underlying storage location.",
-                    "default": true,
-                    "type": "boolean"
-                },
-                "profiling": {
-                    "title": "Profiling",
-                    "default": {
-                        "enabled": false,
-                        "limit": null,
-                        "offset": null,
-                        "report_dropped_profiles": false,
-                        "turn_off_expensive_profiling_metrics": false,
-                        "profile_table_level_only": false,
-                        "include_field_null_count": true,
-                        "include_field_distinct_count": true,
-                        "include_field_min_value": true,
-                        "include_field_max_value": true,
-                        "include_field_mean_value": true,
-                        "include_field_median_value": true,
-                        "include_field_stddev_value": true,
-                        "include_field_quantiles": false,
-                        "include_field_distinct_value_frequencies": false,
-                        "include_field_histogram": false,
-                        "include_field_sample_values": true,
-                        "field_sample_values_limit": 20,
-                        "max_number_of_fields_to_profile": null,
-                        "profile_if_updated_since_days": null,
-                        "profile_table_size_limit": 5,
-                        "profile_table_row_limit": 5000000,
-                        "profile_table_row_count_estimate_only": false,
-                        "max_workers": 10,
-                        "query_combiner_enabled": true,
-                        "catch_exceptions": true,
-                        "partition_profiling_enabled": true,
-                        "partition_datetime": null
-                    },
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/GEProfilingConfig"
-                        }
-                    ]
-                },
-                "username": {
-                    "title": "Username",
-                    "description": "username",
-                    "type": "string"
-                },
-                "password": {
-                    "title": "Password",
-                    "description": "password",
-                    "type": "string",
-                    "writeOnly": true,
-                    "format": "password"
-                },
-                "host_port": {
-                    "title": "Host Port",
-                    "description": "host URL",
-                    "type": "string"
-                },
-                "database": {
-                    "title": "Database",
-                    "description": "database (catalog). If set to Null, all databases will be considered for ingestion.",
-                    "type": "string"
-                },
-                "database_alias": {
-                    "title": "Database Alias",
-                    "description": "[Deprecated] Alias to apply to database when ingesting.",
-                    "type": "string"
-                },
-                "sqlalchemy_uri": {
-                    "title": "Sqlalchemy Uri",
-                    "description": "URI of database to connect to. See https://docs.sqlalchemy.org/en/14/core/engines.html#database-urls. Takes precedence over other connection parameters.",
-                    "type": "string"
-                },
-                "database_pattern": {
-                    "title": "Database Pattern",
-                    "description": "Regex patterns for databases to filter in ingestion.",
-                    "default": {
-                        "allow": [
-                            ".*"
-                        ],
-                        "deny": [],
-                        "ignoreCase": true
-                    },
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/AllowDenyPattern"
-                        }
-                    ]
-                },
-                "include_view_lineage": {
-                    "title": "Include View Lineage",
-                    "description": "Include table lineage for views",
-                    "default": false,
-                    "type": "boolean"
-                },
-                "default_schema": {
-                    "title": "Default Schema",
-                    "description": "The default schema to use if the sql parser fails to parse the schema with `sql_based` lineage collector",
-                    "default": "public",
-                    "type": "string"
-                },
-                "include_table_lineage": {
-                    "title": "Include Table Lineage",
-                    "description": "Whether table lineage should be ingested.",
-                    "default": true,
-                    "type": "boolean"
-                },
-                "include_copy_lineage": {
-                    "title": "Include Copy Lineage",
-                    "description": "Whether lineage should be collected from copy commands",
-                    "default": true,
-                    "type": "boolean"
-                },
-                "include_unload_lineage": {
-                    "title": "Include Unload Lineage",
-                    "description": "Whether lineage should be collected from unload commands",
-                    "default": true,
-                    "type": "boolean"
-                },
-                "capture_lineage_query_parser_failures": {
-                    "title": "Capture Lineage Query Parser Failures",
-                    "description": "Whether to capture lineage query parser errors with dataset properties for debuggings",
-                    "default": false,
-                    "type": "boolean"
-                },
-                "table_lineage_mode": {
-                    "description": "Which table lineage collector mode to use. Available modes are: [stl_scan_based, sql_based, mixed]",
-                    "default": "stl_scan_based",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/LineageMode"
-                        }
-                    ]
-                },
-                "email_domain": {
-                    "title": "Email Domain",
-                    "description": "Email domain of your organisation so users can be displayed on UI appropriately.",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "host_port",
-                "email_domain"
             ],
             "additionalProperties": false
         },
@@ -6621,28 +6621,29 @@
             "description": "Base configuration class for stateful ingestion for source configs to inherit from.",
             "type": "object",
             "properties": {
-                "s3_lineage_config": {
-                    "title": "S3 Lineage Config",
-                    "description": "Common config for S3 lineage generation",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/S3LineageProviderConfig"
-                        }
-                    ]
+                "store_last_profiling_timestamps": {
+                    "title": "Store Last Profiling Timestamps",
+                    "description": "Enable storing last profile timestamp in store.",
+                    "default": false,
+                    "type": "boolean"
                 },
-                "env": {
-                    "title": "Env",
-                    "description": "The environment that all assets produced by this connector belong to",
-                    "default": "PROD",
-                    "type": "string"
+                "incremental_lineage": {
+                    "title": "Incremental Lineage",
+                    "description": "When enabled, emits lineage as incremental to existing lineage already in DataHub. When disabled, re-states lineage on each run.",
+                    "default": true,
+                    "type": "boolean"
                 },
-                "platform_instance_map": {
-                    "title": "Platform Instance Map",
-                    "description": "A holder for platform -> platform_instance mappings to generate correct dataset urns",
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
+                "sql_parser_use_external_process": {
+                    "title": "Sql Parser Use External Process",
+                    "description": "When enabled, sql parser will run in isolated in a separate process. This can affect processing time but can protect from sql parser's mem leak.",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "store_last_lineage_extraction_timestamp": {
+                    "title": "Store Last Lineage Extraction Timestamp",
+                    "description": "Enable checking last lineage extraction date in store.",
+                    "default": false,
+                    "type": "boolean"
                 },
                 "bucket_duration": {
                     "description": "Size of the time window to aggregate usage stats.",
@@ -6664,6 +6665,91 @@
                     "description": "Earliest date of usage to consider. Default: Last full day in UTC (or hour, depending on `bucket_duration`)",
                     "type": "string",
                     "format": "date-time"
+                },
+                "store_last_usage_extraction_timestamp": {
+                    "title": "Store Last Usage Extraction Timestamp",
+                    "description": "Enable checking last usage timestamp in store.",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "top_n_queries": {
+                    "title": "Top N Queries",
+                    "description": "Number of top queries to save to each table.",
+                    "default": 10,
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                },
+                "user_email_pattern": {
+                    "title": "User Email Pattern",
+                    "description": "regex patterns for user emails to filter in usage.",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
+                },
+                "include_operational_stats": {
+                    "title": "Include Operational Stats",
+                    "description": "Whether to display operational stats.",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "include_read_operational_stats": {
+                    "title": "Include Read Operational Stats",
+                    "description": "Whether to report read operational stats. Experimental.",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "format_sql_queries": {
+                    "title": "Format Sql Queries",
+                    "description": "Whether to format sql queries",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "include_top_n_queries": {
+                    "title": "Include Top N Queries",
+                    "description": "Whether to ingest the top_n_queries.",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "email_domain": {
+                    "title": "Email Domain",
+                    "description": "Email domain of your organisation so users can be displayed on UI appropriately.",
+                    "type": "string"
+                },
+                "s3_lineage_config": {
+                    "title": "S3 Lineage Config",
+                    "description": "Common config for S3 lineage generation",
+                    "default": {
+                        "path_specs": [],
+                        "strip_urls": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/S3LineageProviderConfig"
+                        }
+                    ]
+                },
+                "env": {
+                    "title": "Env",
+                    "description": "The environment that all assets produced by this connector belong to",
+                    "default": "PROD",
+                    "type": "string"
+                },
+                "platform_instance_map": {
+                    "title": "Platform Instance Map",
+                    "description": "A holder for platform -> platform_instance mappings to generate correct dataset urns",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
                 },
                 "platform_instance": {
                     "title": "Platform Instance",
@@ -6827,12 +6913,19 @@
                 },
                 "database": {
                     "title": "Database",
-                    "description": "database (catalog). If set to Null, all databases will be considered for ingestion.",
+                    "description": "database",
+                    "default": "dev",
                     "type": "string"
                 },
                 "database_alias": {
                     "title": "Database Alias",
                     "description": "[Deprecated] Alias to apply to database when ingesting.",
+                    "type": "string"
+                },
+                "scheme": {
+                    "title": "Scheme",
+                    "default": "redshift+psycopg2",
+                    "hidden_from_schema": true,
                     "type": "string"
                 },
                 "sqlalchemy_uri": {
@@ -6880,6 +6973,12 @@
                     "default": true,
                     "type": "boolean"
                 },
+                "include_usage_statistics": {
+                    "title": "Include Usage Statistics",
+                    "description": "Generate usage statistic. email_domain config parameter needs to be set if enabled",
+                    "default": false,
+                    "type": "boolean"
+                },
                 "include_unload_lineage": {
                     "title": "Include Unload Lineage",
                     "description": "Whether lineage should be collected from unload commands",
@@ -6888,8 +6987,9 @@
                 },
                 "capture_lineage_query_parser_failures": {
                     "title": "Capture Lineage Query Parser Failures",
-                    "description": "Whether to capture lineage query parser errors with dataset properties for debuggings",
+                    "description": "Whether to capture lineage query parser errors with dataset properties for debugging",
                     "default": false,
+                    "hide_from_schema": true,
                     "type": "boolean"
                 },
                 "table_lineage_mode": {
@@ -6900,6 +7000,11 @@
                             "$ref": "#/definitions/LineageMode"
                         }
                     ]
+                },
+                "extra_client_options": {
+                    "title": "Extra Client Options",
+                    "default": {},
+                    "type": "object"
                 }
             },
             "required": [
@@ -8917,6 +9022,315 @@
             ],
             "additionalProperties": false
         },
+        "redshift-legacy": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "redshift-legacy"
+                    ]
+                },
+                "config": {
+                    "$ref": "#/definitions/redshift-legacy_config"
+                }
+            },
+            "required": [
+                "type",
+                "config"
+            ]
+        },
+        "redshift-legacy_config": {
+            "title": "RedshiftConfig",
+            "description": "Base configuration class for stateful ingestion for source configs to inherit from.",
+            "type": "object",
+            "properties": {
+                "s3_lineage_config": {
+                    "title": "S3 Lineage Config",
+                    "description": "Common config for S3 lineage generation",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/S3LineageProviderConfig"
+                        }
+                    ]
+                },
+                "env": {
+                    "title": "Env",
+                    "description": "The environment that all assets produced by this connector belong to",
+                    "default": "PROD",
+                    "type": "string"
+                },
+                "platform_instance_map": {
+                    "title": "Platform Instance Map",
+                    "description": "A holder for platform -> platform_instance mappings to generate correct dataset urns",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "bucket_duration": {
+                    "description": "Size of the time window to aggregate usage stats.",
+                    "default": "DAY",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/BucketDuration"
+                        }
+                    ]
+                },
+                "end_time": {
+                    "title": "End Time",
+                    "description": "Latest date of usage to consider. Default: Current time in UTC",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "start_time": {
+                    "title": "Start Time",
+                    "description": "Earliest date of usage to consider. Default: Last full day in UTC (or hour, depending on `bucket_duration`)",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "platform_instance": {
+                    "title": "Platform Instance",
+                    "description": "The instance of the platform that all assets produced by this recipe belong to",
+                    "type": "string"
+                },
+                "stateful_ingestion": {
+                    "$ref": "#/definitions/StatefulStaleMetadataRemovalConfig"
+                },
+                "options": {
+                    "title": "Options",
+                    "description": "Any options specified here will be passed to [SQLAlchemy.create_engine](https://docs.sqlalchemy.org/en/14/core/engines.html#sqlalchemy.create_engine) as kwargs.",
+                    "type": "object"
+                },
+                "schema_pattern": {
+                    "title": "Schema Pattern",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [
+                            "information_schema"
+                        ],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
+                },
+                "table_pattern": {
+                    "title": "Table Pattern",
+                    "description": "Regex patterns for tables to filter in ingestion. Specify regex to match the entire table name in database.schema.table format. e.g. to match all tables starting with customer in Customer database and public schema, use the regex 'Customer.public.customer.*'",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
+                },
+                "view_pattern": {
+                    "title": "View Pattern",
+                    "description": "Regex patterns for views to filter in ingestion. Note: Defaults to table_pattern if not specified. Specify regex to match the entire view name in database.schema.view format. e.g. to match all views starting with customer in Customer database and public schema, use the regex 'Customer.public.customer.*'",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
+                },
+                "profile_pattern": {
+                    "title": "Profile Pattern",
+                    "description": "Regex patterns to filter tables (or specific columns) for profiling during ingestion. Note that only tables allowed by the `table_pattern` will be considered.",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
+                },
+                "domain": {
+                    "title": "Domain",
+                    "description": "Attach domains to databases, schemas or tables during ingestion using regex patterns. Domain key can be a guid like *urn:li:domain:ec428203-ce86-4db3-985d-5a8ee6df32ba* or a string like \"Marketing\".) If you provide strings, then datahub will attempt to resolve this name to a guid, and will error out if this fails. There can be multiple domain keys specified.",
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/AllowDenyPattern"
+                    }
+                },
+                "include_views": {
+                    "title": "Include Views",
+                    "description": "Whether views should be ingested.",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "include_tables": {
+                    "title": "Include Tables",
+                    "description": "Whether tables should be ingested.",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "include_table_location_lineage": {
+                    "title": "Include Table Location Lineage",
+                    "description": "If the source supports it, include table lineage to the underlying storage location.",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "profiling": {
+                    "title": "Profiling",
+                    "default": {
+                        "enabled": false,
+                        "limit": null,
+                        "offset": null,
+                        "report_dropped_profiles": false,
+                        "turn_off_expensive_profiling_metrics": false,
+                        "profile_table_level_only": false,
+                        "include_field_null_count": true,
+                        "include_field_distinct_count": true,
+                        "include_field_min_value": true,
+                        "include_field_max_value": true,
+                        "include_field_mean_value": true,
+                        "include_field_median_value": true,
+                        "include_field_stddev_value": true,
+                        "include_field_quantiles": false,
+                        "include_field_distinct_value_frequencies": false,
+                        "include_field_histogram": false,
+                        "include_field_sample_values": true,
+                        "field_sample_values_limit": 20,
+                        "max_number_of_fields_to_profile": null,
+                        "profile_if_updated_since_days": null,
+                        "profile_table_size_limit": 5,
+                        "profile_table_row_limit": 5000000,
+                        "profile_table_row_count_estimate_only": false,
+                        "max_workers": 10,
+                        "query_combiner_enabled": true,
+                        "catch_exceptions": true,
+                        "partition_profiling_enabled": true,
+                        "partition_datetime": null
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/GEProfilingConfig"
+                        }
+                    ]
+                },
+                "username": {
+                    "title": "Username",
+                    "description": "username",
+                    "type": "string"
+                },
+                "password": {
+                    "title": "Password",
+                    "description": "password",
+                    "type": "string",
+                    "writeOnly": true,
+                    "format": "password"
+                },
+                "host_port": {
+                    "title": "Host Port",
+                    "description": "host URL",
+                    "type": "string"
+                },
+                "database": {
+                    "title": "Database",
+                    "description": "database (catalog). If set to Null, all databases will be considered for ingestion.",
+                    "type": "string"
+                },
+                "database_alias": {
+                    "title": "Database Alias",
+                    "description": "[Deprecated] Alias to apply to database when ingesting.",
+                    "type": "string"
+                },
+                "sqlalchemy_uri": {
+                    "title": "Sqlalchemy Uri",
+                    "description": "URI of database to connect to. See https://docs.sqlalchemy.org/en/14/core/engines.html#database-urls. Takes precedence over other connection parameters.",
+                    "type": "string"
+                },
+                "database_pattern": {
+                    "title": "Database Pattern",
+                    "description": "Regex patterns for databases to filter in ingestion.",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
+                },
+                "include_view_lineage": {
+                    "title": "Include View Lineage",
+                    "description": "Include table lineage for views",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "default_schema": {
+                    "title": "Default Schema",
+                    "description": "The default schema to use if the sql parser fails to parse the schema with `sql_based` lineage collector",
+                    "default": "public",
+                    "type": "string"
+                },
+                "include_table_lineage": {
+                    "title": "Include Table Lineage",
+                    "description": "Whether table lineage should be ingested.",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "include_copy_lineage": {
+                    "title": "Include Copy Lineage",
+                    "description": "Whether lineage should be collected from copy commands",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "include_unload_lineage": {
+                    "title": "Include Unload Lineage",
+                    "description": "Whether lineage should be collected from unload commands",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "capture_lineage_query_parser_failures": {
+                    "title": "Capture Lineage Query Parser Failures",
+                    "description": "Whether to capture lineage query parser errors with dataset properties for debuggings",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "table_lineage_mode": {
+                    "description": "Which table lineage collector mode to use. Available modes are: [stl_scan_based, sql_based, mixed]",
+                    "default": "stl_scan_based",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/LineageMode"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "host_port"
+            ],
+            "additionalProperties": false
+        },
         "mongodb": {
             "type": "object",
             "properties": {
@@ -9463,7 +9877,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-04-12T13:40:54.648041+00:00",
+                        "end_time": "2023-04-12T17:24:17.606323+00:00",
                         "start_time": "2023-04-11T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -10983,6 +11397,34 @@
             },
             "additionalProperties": false
         },
+        "S3LineageProviderConfig": {
+            "title": "S3LineageProviderConfig",
+            "description": "Any source that produces s3 lineage from/to Datasets should inherit this class.",
+            "type": "object",
+            "properties": {
+                "path_specs": {
+                    "title": "Path Specs",
+                    "description": "List of PathSpec. See below the details about PathSpec",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PathSpec"
+                    }
+                }
+            },
+            "required": [
+                "path_specs"
+            ],
+            "additionalProperties": false
+        },
+        "LineageMode": {
+            "title": "LineageMode",
+            "description": "An enumeration.",
+            "enum": [
+                "sql_based",
+                "stl_scan_based",
+                "mixed"
+            ]
+        },
         "LookerNamingPattern": {
             "title": "LookerNamingPattern",
             "type": "object",
@@ -11152,34 +11594,6 @@
                 "replace"
             ],
             "additionalProperties": false
-        },
-        "S3LineageProviderConfig": {
-            "title": "S3LineageProviderConfig",
-            "description": "Any source that produces s3 lineage from/to Datasets should inherit this class.",
-            "type": "object",
-            "properties": {
-                "path_specs": {
-                    "title": "Path Specs",
-                    "description": "List of PathSpec. See below the details about PathSpec",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/PathSpec"
-                    }
-                }
-            },
-            "required": [
-                "path_specs"
-            ],
-            "additionalProperties": false
-        },
-        "LineageMode": {
-            "title": "LineageMode",
-            "description": "An enumeration.",
-            "enum": [
-                "sql_based",
-                "stl_scan_based",
-                "mixed"
-            ]
         },
         "NifiAuthType": {
             "title": "NifiAuthType",
@@ -11740,6 +12154,9 @@
                     "$ref": "#/definitions/elasticsearch"
                 },
                 {
+                    "$ref": "#/definitions/redshift-usage-legacy"
+                },
+                {
                     "$ref": "#/definitions/datahub-business-glossary"
                 },
                 {
@@ -11762,9 +12179,6 @@
                 },
                 {
                     "$ref": "#/definitions/json-schema"
-                },
-                {
-                    "$ref": "#/definitions/redshift-usage"
                 },
                 {
                     "$ref": "#/definitions/nifi"
@@ -11840,6 +12254,9 @@
                 },
                 {
                     "$ref": "#/definitions/file"
+                },
+                {
+                    "$ref": "#/definitions/redshift-legacy"
                 },
                 {
                     "$ref": "#/definitions/mongodb"
