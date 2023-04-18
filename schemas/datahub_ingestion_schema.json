@@ -9883,7 +9883,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-04-18T21:35:19.551274+00:00",
+                        "end_time": "2023-04-18T23:25:44.664976+00:00",
                         "start_time": "2023-04-17T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
