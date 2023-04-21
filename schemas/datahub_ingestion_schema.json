@@ -6498,6 +6498,20 @@
                     "default": 60,
                     "type": "integer"
                 },
+                "scan_batch_size": {
+                    "title": "Scan Batch Size",
+                    "description": "batch size for sending workspace_ids to PBI, 100 is the limit",
+                    "default": 1,
+                    "exclusiveMinimum": 0,
+                    "maximum": 100,
+                    "type": "integer"
+                },
+                "workspace_id_as_urn_part": {
+                    "title": "Workspace Id As Urn Part",
+                    "description": "Highly recommend changing this to True, as you can have the same workspace nameTo maintain backward compatability, this is set to False which uses workspace name",
+                    "default": false,
+                    "type": "boolean"
+                },
                 "extract_ownership": {
                     "title": "Extract Ownership",
                     "description": "Whether ownership should be ingested. Admin API access is required if this setting is enabled. Note that enabling this may overwrite owners that you've added inside DataHub's web application.",
@@ -6508,6 +6522,39 @@
                     "title": "Extract Reports",
                     "description": "Whether reports should be ingested",
                     "default": true,
+                    "type": "boolean"
+                },
+                "ownership": {
+                    "title": "Ownership",
+                    "description": "Configure how is ownership ingested",
+                    "default": {
+                        "create_corp_user": true,
+                        "use_powerbi_email": false,
+                        "remove_email_suffix": false,
+                        "dataset_configured_by_as_owner": false,
+                        "owner_criteria": null
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/OwnershipMapping"
+                        }
+                    ]
+                },
+                "modified_since": {
+                    "title": "Modified Since",
+                    "description": "Get only recently modified workspaces based on modified_since datetime '2023-02-10T00:00:00.0000000Z', excludePersonalWorkspaces and excludeInActiveWorkspaces limit to last 30 days",
+                    "type": "string"
+                },
+                "extract_dashboards": {
+                    "title": "Extract Dashboards",
+                    "description": "Whether to ingest PBI Dashboard and Tiles as Datahub Dashboard and Chart",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "extract_dataset_schema": {
+                    "title": "Extract Dataset Schema",
+                    "description": "Whether to ingest PBI Dataset Table columns and measures",
+                    "default": false,
                     "type": "boolean"
                 },
                 "extract_lineage": {
@@ -6522,10 +6569,32 @@
                     "default": false,
                     "type": "boolean"
                 },
+                "filter_dataset_endorsements": {
+                    "title": "Filter Dataset Endorsements",
+                    "description": "Filter and ingest datasets which are 'Certified' or 'Promoted' endorsement. If both are added, dataset which are 'Certified' or 'Promoted' will be ingested . Default setting allows all dataset to be ingested",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
+                },
                 "extract_workspaces_to_containers": {
                     "title": "Extract Workspaces To Containers",
                     "description": "Extract workspaces to DataHub containers",
                     "default": true,
+                    "type": "boolean"
+                },
+                "extract_datasets_to_containers": {
+                    "title": "Extract Datasets To Containers",
+                    "description": "PBI tables will be grouped under a Datahub Container, the container reflect a PBI Dataset",
+                    "default": false,
                     "type": "boolean"
                 },
                 "native_query_parsing": {
@@ -9883,7 +9952,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-04-21T05:28:56.843300+00:00",
+                        "end_time": "2023-04-21T06:17:01.381406+00:00",
                         "start_time": "2023-04-20T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -11705,9 +11774,48 @@
                 },
                 "env": {
                     "title": "Env",
-                    "description": "The environment that the platform is located in. It is default to PROD",
+                    "description": "The environment that all assets produced by DataHub platform ingestion source belong to",
                     "default": "PROD",
                     "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "OwnershipMapping": {
+            "title": "OwnershipMapping",
+            "type": "object",
+            "properties": {
+                "create_corp_user": {
+                    "title": "Create Corp User",
+                    "description": "Whether ingest PowerBI user as Datahub Corpuser",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "use_powerbi_email": {
+                    "title": "Use Powerbi Email",
+                    "description": "Use PowerBI User email to ingest as corpuser, default is powerbi user identifier",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "remove_email_suffix": {
+                    "title": "Remove Email Suffix",
+                    "description": "Remove PowerBI User email suffix for example, @acryl.io",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "dataset_configured_by_as_owner": {
+                    "title": "Dataset Configured By As Owner",
+                    "description": "Take PBI dataset configuredBy as dataset owner if exist",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "owner_criteria": {
+                    "title": "Owner Criteria",
+                    "description": "Need to have certain authority to qualify as owner for example ['ReadWriteReshareExplore','Owner','Admin']",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             },
             "additionalProperties": false
