@@ -779,17 +779,17 @@
             "properties": {
                 "aws_access_key_id": {
                     "title": "Aws Access Key Id",
-                    "description": "AWS access key ID. Can be auto-detected, see https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html for details.",
+                    "description": "AWS access key ID. Can be auto-detected, see [the AWS boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html) for details.",
                     "type": "string"
                 },
                 "aws_secret_access_key": {
                     "title": "Aws Secret Access Key",
-                    "description": "AWS secret access key. Can be auto-detected, see https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html for details.",
+                    "description": "AWS secret access key. Can be auto-detected, see [the AWS boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html) for details.",
                     "type": "string"
                 },
                 "aws_session_token": {
                     "title": "Aws Session Token",
-                    "description": "AWS session token. Can be auto-detected, see https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html for details.",
+                    "description": "AWS session token. Can be auto-detected, see [the AWS boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html) for details.",
                     "type": "string"
                 },
                 "aws_role": {
@@ -826,12 +826,12 @@
                 },
                 "aws_endpoint_url": {
                     "title": "Aws Endpoint Url",
-                    "description": "Autodetected. See https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html",
+                    "description": "The AWS service endpoint. This is normally [constructed automatically](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html), but can be overridden here.",
                     "type": "string"
                 },
                 "aws_proxy": {
                     "title": "Aws Proxy",
-                    "description": "Autodetected. See https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html",
+                    "description": "A set of proxy configs to use with AWS. See the [botocore.config](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html) docs for details.",
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
@@ -1280,7 +1280,7 @@
                 },
                 "use_s3_object_tags": {
                     "title": "Use S3 Object Tags",
-                    "description": "# Whether or not to create tags in datahub from the s3 object",
+                    "description": "Whether or not to create tags in datahub from the s3 object",
                     "type": "boolean"
                 },
                 "update_schema_on_partition_file_updates": {
@@ -9485,17 +9485,17 @@
             "properties": {
                 "aws_access_key_id": {
                     "title": "Aws Access Key Id",
-                    "description": "AWS access key ID. Can be auto-detected, see https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html for details.",
+                    "description": "AWS access key ID. Can be auto-detected, see [the AWS boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html) for details.",
                     "type": "string"
                 },
                 "aws_secret_access_key": {
                     "title": "Aws Secret Access Key",
-                    "description": "AWS secret access key. Can be auto-detected, see https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html for details.",
+                    "description": "AWS secret access key. Can be auto-detected, see [the AWS boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html) for details.",
                     "type": "string"
                 },
                 "aws_session_token": {
                     "title": "Aws Session Token",
-                    "description": "AWS session token. Can be auto-detected, see https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html for details.",
+                    "description": "AWS session token. Can be auto-detected, see [the AWS boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html) for details.",
                     "type": "string"
                 },
                 "aws_role": {
@@ -9532,12 +9532,12 @@
                 },
                 "aws_endpoint_url": {
                     "title": "Aws Endpoint Url",
-                    "description": "Autodetected. See https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html",
+                    "description": "The AWS service endpoint. This is normally [constructed automatically](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html), but can be overridden here.",
                     "type": "string"
                 },
                 "aws_proxy": {
                     "title": "Aws Proxy",
-                    "description": "Autodetected. See https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html",
+                    "description": "A set of proxy configs to use with AWS. See the [botocore.config](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html) docs for details.",
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
@@ -9883,8 +9883,8 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-04-20T18:36:12.059296+00:00",
-                        "start_time": "2023-04-19T00:00:00+00:00",
+                        "end_time": "2023-04-21T04:18:49.305851+00:00",
+                        "start_time": "2023-04-20T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
                             "allow": [
@@ -10792,17 +10792,17 @@
             "properties": {
                 "aws_access_key_id": {
                     "title": "Aws Access Key Id",
-                    "description": "AWS access key ID. Can be auto-detected, see https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html for details.",
+                    "description": "AWS access key ID. Can be auto-detected, see [the AWS boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html) for details.",
                     "type": "string"
                 },
                 "aws_secret_access_key": {
                     "title": "Aws Secret Access Key",
-                    "description": "AWS secret access key. Can be auto-detected, see https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html for details.",
+                    "description": "AWS secret access key. Can be auto-detected, see [the AWS boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html) for details.",
                     "type": "string"
                 },
                 "aws_session_token": {
                     "title": "Aws Session Token",
-                    "description": "AWS session token. Can be auto-detected, see https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html for details.",
+                    "description": "AWS session token. Can be auto-detected, see [the AWS boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html) for details.",
                     "type": "string"
                 },
                 "aws_role": {
@@ -10839,12 +10839,12 @@
                 },
                 "aws_endpoint_url": {
                     "title": "Aws Endpoint Url",
-                    "description": "Autodetected. See https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html",
+                    "description": "The AWS service endpoint. This is normally [constructed automatically](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html), but can be overridden here.",
                     "type": "string"
                 },
                 "aws_proxy": {
                     "title": "Aws Proxy",
-                    "description": "Autodetected. See https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html",
+                    "description": "A set of proxy configs to use with AWS. See the [botocore.config](https://botocore.amazonaws.com/v1/documentation/api/latest/reference/config.html) docs for details.",
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
