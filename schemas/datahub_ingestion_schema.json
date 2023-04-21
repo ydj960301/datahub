@@ -909,7 +909,7 @@
                 },
                 "emit_s3_lineage": {
                     "title": "Emit S3 Lineage",
-                    "description": " Whether to emit S3-to-Glue lineage.",
+                    "description": "Whether to emit S3-to-Glue lineage.",
                     "default": false,
                     "type": "boolean"
                 },
@@ -932,6 +932,12 @@
                     "title": "Catalog Id",
                     "description": "The aws account id where the target glue catalog lives. If None, datahub will ingest glue in aws caller's account.",
                     "type": "string"
+                },
+                "ignore_resource_links": {
+                    "title": "Ignore Resource Links",
+                    "description": "If set to True, ignore database resource links.",
+                    "default": false,
+                    "type": "boolean"
                 },
                 "use_s3_bucket_tags": {
                     "title": "Use S3 Bucket Tags",
@@ -4035,6 +4041,12 @@
                     "description": "When enabled, sql parsing will be executed in a separate process to prevent memory leaks.",
                     "default": false,
                     "type": "boolean"
+                },
+                "process_refinements": {
+                    "title": "Process Refinements",
+                    "description": "When enabled, looker refinement will be processed to adapt an existing view.",
+                    "default": false,
+                    "type": "boolean"
                 }
             },
             "additionalProperties": false
@@ -4436,9 +4448,9 @@
                     "default": true,
                     "type": "boolean"
                 },
-                "include_table_ownership": {
-                    "title": "Include Table Ownership",
-                    "description": "Option to enable/disable table ownership generation.",
+                "include_ownership": {
+                    "title": "Include Ownership",
+                    "description": "Option to enable/disable ownership generation for metastores, catalogs, schemas, and tables.",
                     "default": false,
                     "type": "boolean"
                 },
@@ -9952,7 +9964,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-04-21T06:17:01.381406+00:00",
+                        "end_time": "2023-04-21T18:16:25.556658+00:00",
                         "start_time": "2023-04-20T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
