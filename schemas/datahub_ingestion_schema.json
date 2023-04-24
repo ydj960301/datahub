@@ -8382,6 +8382,12 @@
                     "default": true,
                     "type": "boolean"
                 },
+                "validate_upstreams_against_patterns": {
+                    "title": "Validate Upstreams Against Patterns",
+                    "description": "Whether to validate upstream snowflake tables against allow-deny patterns",
+                    "default": true,
+                    "type": "boolean"
+                },
                 "tag_pattern": {
                     "title": "Tag Pattern",
                     "description": "List of regex patterns for tags to include in ingestion. Only used if `extract_tags` is enabled.",
@@ -9964,7 +9970,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-04-24T15:00:31.891735+00:00",
+                        "end_time": "2023-04-24T18:44:58.507560+00:00",
                         "start_time": "2023-04-23T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
