@@ -9970,8 +9970,8 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-04-25T21:53:06.827445+00:00",
-                        "start_time": "2023-04-24T00:00:00+00:00",
+                        "end_time": "2023-04-26T16:05:12.803872+00:00",
+                        "start_time": "2023-04-25T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
                             "allow": [
