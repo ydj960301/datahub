@@ -2789,7 +2789,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-04-27T02:58:57.437119+00:00",
+                        "end_time": "2023-04-27T17:10:56.476575+00:00",
                         "start_time": "2023-04-26T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -5808,6 +5808,70 @@
             ],
             "additionalProperties": false
         },
+        "gcs": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "gcs"
+                    ]
+                },
+                "config": {
+                    "$ref": "#/definitions/gcs_config"
+                }
+            },
+            "required": [
+                "type",
+                "config"
+            ]
+        },
+        "gcs_config": {
+            "title": "GCSSourceConfig",
+            "description": "Any source that is a primary producer of Dataset metadata should inherit this class",
+            "type": "object",
+            "properties": {
+                "path_specs": {
+                    "title": "Path Specs",
+                    "description": "List of PathSpec. See [below](#path-spec) the details about PathSpec",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PathSpec"
+                    }
+                },
+                "env": {
+                    "title": "Env",
+                    "description": "The environment that all assets produced by this connector belong to",
+                    "default": "PROD",
+                    "type": "string"
+                },
+                "platform_instance": {
+                    "title": "Platform Instance",
+                    "description": "The instance of the platform that all assets produced by this recipe belong to",
+                    "type": "string"
+                },
+                "credential": {
+                    "title": "Credential",
+                    "description": "Google cloud storage [HMAC keys](https://cloud.google.com/storage/docs/authentication/hmackeys)",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/HMACKey"
+                        }
+                    ]
+                },
+                "max_rows": {
+                    "title": "Max Rows",
+                    "description": "Maximum number of rows to use when inferring schemas for TSV and CSV files.",
+                    "default": 100,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "path_specs",
+                "credential"
+            ],
+            "additionalProperties": false
+        },
         "presto": {
             "type": "object",
             "properties": {
@@ -7393,9 +7457,17 @@
         },
         "s3_config": {
             "title": "DataLakeSourceConfig",
-            "description": "Any source that connects to a platform should inherit this class",
+            "description": "Any source that is a primary producer of Dataset metadata should inherit this class",
             "type": "object",
             "properties": {
+                "path_specs": {
+                    "title": "Path Specs",
+                    "description": "List of PathSpec. See [below](#path-spec) the details about PathSpec",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PathSpec"
+                    }
+                },
                 "env": {
                     "title": "Env",
                     "description": "The environment that all assets produced by this connector belong to",
@@ -7406,14 +7478,6 @@
                     "title": "Platform Instance",
                     "description": "The instance of the platform that all assets produced by this recipe belong to",
                     "type": "string"
-                },
-                "path_specs": {
-                    "title": "Path Specs",
-                    "description": "List of PathSpec. See [below](#path-spec) the details about PathSpec",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/PathSpec"
-                    }
                 },
                 "platform": {
                     "title": "Platform",
@@ -11277,7 +11341,7 @@
             "properties": {
                 "include": {
                     "title": "Include",
-                    "description": "Path to table (s3 or local file system). Name variable {table} is used to mark the folder with dataset. In absence of {table}, file level dataset will be created. Check below examples for more details.",
+                    "description": "Path to table. Name variable `{table}` is used to mark the folder with dataset. In absence of `{table}`, file level dataset will be created. Check below examples for more details.",
                     "type": "string"
                 },
                 "exclude": {
@@ -11754,6 +11818,29 @@
                     "type": "boolean"
                 }
             },
+            "additionalProperties": false
+        },
+        "HMACKey": {
+            "title": "HMACKey",
+            "type": "object",
+            "properties": {
+                "hmac_access_id": {
+                    "title": "Hmac Access Id",
+                    "description": "Access ID",
+                    "type": "string"
+                },
+                "hmac_access_secret": {
+                    "title": "Hmac Access Secret",
+                    "description": "Secret",
+                    "type": "string",
+                    "writeOnly": true,
+                    "format": "password"
+                }
+            },
+            "required": [
+                "hmac_access_id",
+                "hmac_access_secret"
+            ],
             "additionalProperties": false
         },
         "LookerNamingPattern": {
@@ -12320,6 +12407,9 @@
                 },
                 {
                     "$ref": "#/definitions/redshift-legacy"
+                },
+                {
+                    "$ref": "#/definitions/gcs"
                 },
                 {
                     "$ref": "#/definitions/presto"
