@@ -318,7 +318,7 @@
                     "title": "Connection",
                     "default": {
                         "bootstrap": "localhost:9092",
-                        "schema_registry_url": "http://localhost:8081",
+                        "schema_registry_url": "http://localhost:8080/schema-registry/api/",
                         "schema_registry_config": {},
                         "client_timeout_seconds": 60,
                         "consumer_config": {}
@@ -1820,6 +1820,74 @@
                     "description": "The instance of the platform that all assets produced by this recipe belong to",
                     "type": "string"
                 },
+                "bucket_duration": {
+                    "description": "Size of the time window to aggregate usage stats.",
+                    "default": "DAY",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/BucketDuration"
+                        }
+                    ]
+                },
+                "end_time": {
+                    "title": "End Time",
+                    "description": "Latest date of usage to consider. Default: Current time in UTC",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "start_time": {
+                    "title": "Start Time",
+                    "description": "Earliest date of usage to consider. Default: Last full day in UTC (or hour, depending on `bucket_duration`)",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "top_n_queries": {
+                    "title": "Top N Queries",
+                    "description": "Number of top queries to save to each table.",
+                    "default": 10,
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                },
+                "user_email_pattern": {
+                    "title": "User Email Pattern",
+                    "description": "regex patterns for user emails to filter in usage.",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
+                },
+                "include_operational_stats": {
+                    "title": "Include Operational Stats",
+                    "description": "Whether to display operational stats.",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "include_read_operational_stats": {
+                    "title": "Include Read Operational Stats",
+                    "description": "Whether to report read operational stats. Experimental.",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "format_sql_queries": {
+                    "title": "Format Sql Queries",
+                    "description": "Whether to format sql queries",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "include_top_n_queries": {
+                    "title": "Include Top N Queries",
+                    "description": "Whether to ingest the top_n_queries.",
+                    "default": true,
+                    "type": "boolean"
+                },
                 "stateful_ingestion": {
                     "title": "Stateful Ingestion",
                     "description": "Unity Catalog Stateful Ingestion Config.",
@@ -1932,6 +2000,12 @@
                 "include_column_lineage": {
                     "title": "Include Column Lineage",
                     "description": "Option to enable/disable lineage generation. Currently we have to call a rest call per column to get column level lineage due to the Databrick api which can slow down ingestion. ",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "include_usage_statistics": {
+                    "title": "Include Usage Statistics",
+                    "description": "Generate usage statistics.",
                     "default": true,
                     "type": "boolean"
                 }
@@ -2789,7 +2863,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-05-01T14:35:46.109009+00:00",
+                        "end_time": "2023-05-01T18:54:44.368128+00:00",
                         "start_time": "2023-04-30T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -10845,7 +10919,7 @@
                 },
                 "schema_registry_url": {
                     "title": "Schema Registry Url",
-                    "default": "http://localhost:8081",
+                    "default": "http://localhost:8080/schema-registry/api/",
                     "type": "string"
                 },
                 "schema_registry_config": {
