@@ -1930,7 +1930,7 @@
                 },
                 "catalog_pattern": {
                     "title": "Catalog Pattern",
-                    "description": "Regex patterns for catalogs to filter in ingestion. Specify regex to match the catalog name",
+                    "description": "Regex patterns for catalogs to filter in ingestion. Specify regex to match the full `metastore.catalog` name.",
                     "default": {
                         "allow": [
                             ".*"
@@ -1946,7 +1946,7 @@
                 },
                 "schema_pattern": {
                     "title": "Schema Pattern",
-                    "description": "Regex patterns for schemas to filter in ingestion. Specify regex to only match the schema name. e.g. to match all tables in schema analytics, use the regex 'analytics'",
+                    "description": "Regex patterns for schemas to filter in ingestion. Specify regex to the full `metastore.catalog.schema` name. e.g. to match all tables in schema analytics, use the regex `^mymetastore\\.mycatalog\\.analytics$`.",
                     "default": {
                         "allow": [
                             ".*"
@@ -1962,7 +1962,7 @@
                 },
                 "table_pattern": {
                     "title": "Table Pattern",
-                    "description": "Regex patterns for tables to filter in ingestion. Specify regex to match the entire table name in catalog.schema.table format. e.g. to match all tables starting with customer in Customer catalog and public schema, use the regex 'Customer.public.customer.*'",
+                    "description": "Regex patterns for tables to filter in ingestion. Specify regex to match the entire table name in `catalog.schema.table` format. e.g. to match all tables starting with customer in Customer catalog and public schema, use the regex `Customer\\.public\\.customer.*`.",
                     "default": {
                         "allow": [
                             ".*"
@@ -2863,7 +2863,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-05-02T22:40:23.742441+00:00",
+                        "end_time": "2023-05-02T23:43:23.391680+00:00",
                         "start_time": "2023-05-01T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
