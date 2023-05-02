@@ -2863,7 +2863,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-05-02T03:35:57.216190+00:00",
+                        "end_time": "2023-05-02T13:29:50.263742+00:00",
                         "start_time": "2023-05-01T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -9355,7 +9355,7 @@
                 },
                 "schema_pattern": {
                     "title": "Schema Pattern",
-                    "description": "Regex patterns for schemas to filter in ingestion. Specify regex to only match the schema name. e.g. to match all tables in schema analytics, use the regex 'analytics'",
+                    "description": "Deprecated in favour of database_pattern.",
                     "default": {
                         "allow": [
                             ".*"
@@ -9507,6 +9507,22 @@
                     "title": "Sqlalchemy Uri",
                     "description": "URI of database to connect to. See https://docs.sqlalchemy.org/en/14/core/engines.html#database-urls. Takes precedence over other connection parameters.",
                     "type": "string"
+                },
+                "database_pattern": {
+                    "title": "Database Pattern",
+                    "description": "Regex patterns for databases to filter in ingestion.",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
                 }
             },
             "required": [
