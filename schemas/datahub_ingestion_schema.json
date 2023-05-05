@@ -2863,7 +2863,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-05-05T16:15:13.059325+00:00",
+                        "end_time": "2023-05-05T18:33:30.204297+00:00",
                         "start_time": "2023-05-04T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -5296,6 +5296,16 @@
                 "password": {
                     "title": "Password",
                     "description": "Password for Salesforce user",
+                    "type": "string"
+                },
+                "consumer_key": {
+                    "title": "Consumer Key",
+                    "description": "Consumer key for Salesforce JSON web token access",
+                    "type": "string"
+                },
+                "private_key": {
+                    "title": "Private Key",
+                    "description": "Private key as a string for Salesforce JSON web token access",
                     "type": "string"
                 },
                 "security_token": {
@@ -11894,7 +11904,8 @@
             "description": "An enumeration.",
             "enum": [
                 "USERNAME_PASSWORD",
-                "DIRECT_ACCESS_TOKEN"
+                "DIRECT_ACCESS_TOKEN",
+                "JSON_WEB_TOKEN"
             ]
         },
         "SalesforceProfilingConfig": {
