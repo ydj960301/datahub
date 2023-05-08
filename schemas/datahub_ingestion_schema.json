@@ -1365,6 +1365,20 @@
                             "$ref": "#/definitions/AllowDenyPattern"
                         }
                     ]
+                },
+                "upstreams_deny_pattern": {
+                    "title": "Upstreams Deny Pattern",
+                    "description": "[Advanced] Regex patterns for upstream tables to filter in ingestion. Specify regex to match the entire table name in database.schema.table format. Defaults are to set in such a way to ignore the temporary staging tables created by known ETL tools. Not used if `use_legacy_lineage_method=True`",
+                    "default": [
+                        ".*\\.FIVETRAN_.*_STAGING\\..*",
+                        ".*__DBT_TMP$",
+                        ".*\\.SEGMENT_[a-f0-9]{8}[-_][a-f0-9]{4}[-_][a-f0-9]{4}[-_][a-f0-9]{4}[-_][a-f0-9]{12}",
+                        ".*\\.STAGING_.*_[a-f0-9]{8}[-_][a-f0-9]{4}[-_][a-f0-9]{4}[-_][a-f0-9]{4}[-_][a-f0-9]{12}"
+                    ],
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             },
             "required": [
@@ -2863,7 +2877,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-05-08T17:59:00.561664+00:00",
+                        "end_time": "2023-05-08T22:23:59.788601+00:00",
                         "start_time": "2023-05-07T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
