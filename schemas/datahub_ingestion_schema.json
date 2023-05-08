@@ -1904,7 +1904,7 @@
                 },
                 "workspace_url": {
                     "title": "Workspace Url",
-                    "description": "Databricks workspace url",
+                    "description": "Databricks workspace url. e.g. https://my-workspace.cloud.databricks.com",
                     "type": "string"
                 },
                 "workspace_name": {
@@ -2863,7 +2863,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-05-08T08:34:16.418218+00:00",
+                        "end_time": "2023-05-08T17:59:00.561664+00:00",
                         "start_time": "2023-05-07T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
