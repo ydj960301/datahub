@@ -216,6 +216,12 @@
             "description": "Base configuration class for stateful ingestion for source configs to inherit from.",
             "type": "object",
             "properties": {
+                "store_last_profiling_timestamps": {
+                    "title": "Store Last Profiling Timestamps",
+                    "description": "Enable storing last profile timestamp in store.",
+                    "default": false,
+                    "type": "boolean"
+                },
                 "env": {
                     "title": "Env",
                     "description": "The environment that all assets produced by this connector belong to",
@@ -415,6 +421,30 @@
                     "description": "Generate usage statistics.",
                     "default": true,
                     "type": "boolean"
+                },
+                "profiling": {
+                    "title": "Profiling",
+                    "description": "Data profiling configuration",
+                    "default": {
+                        "enabled": false,
+                        "warehouse_id": null,
+                        "profile_table_level_only": false,
+                        "pattern": {
+                            "allow": [
+                                ".*"
+                            ],
+                            "deny": [],
+                            "ignoreCase": true
+                        },
+                        "call_analyze": true,
+                        "max_wait_secs": 3600,
+                        "max_workers": 10
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/UnityCatalogProfilerConfig"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -9367,7 +9397,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-05-11T16:32:23.515749+00:00",
+                        "end_time": "2023-05-11T17:08:33.408898+00:00",
                         "start_time": "2023-05-10T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -10905,6 +10935,64 @@
                     "description": "Soft-deletes the entities present in the last successful run but missing in the current run with stateful_ingestion enabled.",
                     "default": true,
                     "type": "boolean"
+                }
+            },
+            "additionalProperties": false
+        },
+        "UnityCatalogProfilerConfig": {
+            "title": "UnityCatalogProfilerConfig",
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "title": "Enabled",
+                    "description": "Whether profiling should be done.",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "warehouse_id": {
+                    "title": "Warehouse Id",
+                    "description": "SQL Warehouse id, for running profiling queries.",
+                    "type": "string"
+                },
+                "profile_table_level_only": {
+                    "title": "Profile Table Level Only",
+                    "description": "Whether to perform profiling at table-level only or include column-level profiling as well.",
+                    "default": false,
+                    "type": "boolean"
+                },
+                "pattern": {
+                    "title": "Pattern",
+                    "description": "Regex patterns to filter tables for profiling during ingestion. Specify regex to match the `catalog.schema.table` format. Note that only tables allowed by the `table_pattern` will be considered.",
+                    "default": {
+                        "allow": [
+                            ".*"
+                        ],
+                        "deny": [],
+                        "ignoreCase": true
+                    },
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/AllowDenyPattern"
+                        }
+                    ]
+                },
+                "call_analyze": {
+                    "title": "Call Analyze",
+                    "description": "Whether to call ANALYZE TABLE as part of profile ingestion.If false, will ingest the results of the most recent ANALYZE TABLE call, if any.",
+                    "default": true,
+                    "type": "boolean"
+                },
+                "max_wait_secs": {
+                    "title": "Max Wait Secs",
+                    "description": "Maximum time to wait for an ANALYZE TABLE query to complete.",
+                    "default": 3600,
+                    "type": "integer"
+                },
+                "max_workers": {
+                    "title": "Max Workers",
+                    "description": "Number of worker threads to use for profiling. Set to 1 to disable.",
+                    "default": 10,
+                    "type": "integer"
                 }
             },
             "additionalProperties": false
