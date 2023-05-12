@@ -6315,8 +6315,18 @@
         },
         "superset_config": {
             "title": "SupersetConfig",
+            "description": "Base configuration class for stateful ingestion for source configs to inherit from.",
             "type": "object",
             "properties": {
+                "stateful_ingestion": {
+                    "title": "Stateful Ingestion",
+                    "description": "Superset Stateful Ingestion Config.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/StatefulStaleMetadataRemovalConfig"
+                        }
+                    ]
+                },
                 "connect_uri": {
                     "title": "Connect Uri",
                     "description": "Superset host URL.",
@@ -6364,8 +6374,7 @@
                         "type": "string"
                     }
                 }
-            },
-            "additionalProperties": false
+            }
         },
         "okta": {
             "type": "object",
@@ -9397,8 +9406,8 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-05-11T20:07:33.526828+00:00",
-                        "start_time": "2023-05-10T00:00:00+00:00",
+                        "end_time": "2023-05-12T05:05:32.720846+00:00",
+                        "start_time": "2023-05-11T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
                             "allow": [
