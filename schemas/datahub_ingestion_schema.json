@@ -3795,7 +3795,7 @@
                 },
                 "authentication_type": {
                     "title": "Authentication Type",
-                    "description": "The type of authenticator to use when connecting to Snowflake. Supports \"DEFAULT_AUTHENTICATOR\", \"EXTERNAL_BROWSER_AUTHENTICATOR\" and \"KEY_PAIR_AUTHENTICATOR\".",
+                    "description": "The type of authenticator to use when connecting to Snowflake. Supports \"DEFAULT_AUTHENTICATOR\", \"OAUTH_AUTHENTICATOR\", \"EXTERNAL_BROWSER_AUTHENTICATOR\" and \"KEY_PAIR_AUTHENTICATOR\".",
                     "default": "DEFAULT_AUTHENTICATOR",
                     "type": "string"
                 },
@@ -4379,7 +4379,7 @@
         },
         "gcs_config": {
             "title": "GCSSourceConfig",
-            "description": "Any source that is a primary producer of Dataset metadata should inherit this class",
+            "description": "Base configuration class for stateful ingestion for source configs to inherit from.",
             "type": "object",
             "properties": {
                 "path_specs": {
@@ -4401,6 +4401,9 @@
                     "description": "The instance of the platform that all assets produced by this recipe belong to",
                     "type": "string"
                 },
+                "stateful_ingestion": {
+                    "$ref": "#/definitions/StatefulStaleMetadataRemovalConfig"
+                },
                 "credential": {
                     "title": "Credential",
                     "description": "Google cloud storage [HMAC keys](https://cloud.google.com/storage/docs/authentication/hmackeys)",
@@ -4413,6 +4416,12 @@
                 "max_rows": {
                     "title": "Max Rows",
                     "description": "Maximum number of rows to use when inferring schemas for TSV and CSV files.",
+                    "default": 100,
+                    "type": "integer"
+                },
+                "number_of_files_to_sample": {
+                    "title": "Number Of Files To Sample",
+                    "description": "Number of files to list to sample for schema inference. This will be ignored if sample_files is set to False in the pathspec.",
                     "default": 100,
                     "type": "integer"
                 }
@@ -9430,7 +9439,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-05-19T10:39:50.979865+00:00",
+                        "end_time": "2023-05-19T11:39:12.740411+00:00",
                         "start_time": "2023-05-18T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
@@ -9659,7 +9668,7 @@
         },
         "s3_config": {
             "title": "DataLakeSourceConfig",
-            "description": "Any source that is a primary producer of Dataset metadata should inherit this class",
+            "description": "Base configuration class for stateful ingestion for source configs to inherit from.",
             "type": "object",
             "properties": {
                 "path_specs": {
@@ -9680,6 +9689,9 @@
                     "title": "Platform Instance",
                     "description": "The instance of the platform that all assets produced by this recipe belong to",
                     "type": "string"
+                },
+                "stateful_ingestion": {
+                    "$ref": "#/definitions/StatefulStaleMetadataRemovalConfig"
                 },
                 "platform": {
                     "title": "Platform",
@@ -9704,12 +9716,6 @@
                 "use_s3_object_tags": {
                     "title": "Use S3 Object Tags",
                     "description": "Whether or not to create tags in datahub from the s3 object",
-                    "type": "boolean"
-                },
-                "update_schema_on_partition_file_updates": {
-                    "title": "Update Schema On Partition File Updates",
-                    "description": "Whether to update the table schema when schema in files within the partitions are updated.",
-                    "default": false,
                     "type": "boolean"
                 },
                 "profile_patterns": {
@@ -9776,6 +9782,12 @@
                             "type": "string"
                         }
                     ]
+                },
+                "number_of_files_to_sample": {
+                    "title": "Number Of Files To Sample",
+                    "description": "Number of files to list to sample for schema inference. This will be ignored if sample_files is set to False in the pathspec.",
+                    "default": 100,
+                    "type": "integer"
                 }
             },
             "required": [
