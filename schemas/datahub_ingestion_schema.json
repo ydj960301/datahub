@@ -9439,7 +9439,7 @@
                     "description": "Usage related configs",
                     "default": {
                         "bucket_duration": "DAY",
-                        "end_time": "2023-05-19T11:39:12.740411+00:00",
+                        "end_time": "2023-05-19T13:41:43.969668+00:00",
                         "start_time": "2023-05-18T00:00:00+00:00",
                         "top_n_queries": 10,
                         "user_email_pattern": {
