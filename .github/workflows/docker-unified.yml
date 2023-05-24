@@ -315,6 +315,7 @@ jobs:
           fetch-depth: 0
       - name: Pre-build artifacts for docker image
         run: |
+          export NODE_OPTIONS=--openssl-legacy-provider
           ./gradlew :datahub-frontend:dist -x test -x yarnTest -x yarnLint --parallel
           mv ./datahub-frontend/build/distributions/datahub-frontend-*.zip datahub-frontend.zip
       - name: Build and push
