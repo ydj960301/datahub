@@ -12,6 +12,7 @@ import oktaLogo from '../../../../images/oktalogo.png';
 import glueLogo from '../../../../images/gluelogo.png';
 import oracleLogo from '../../../../images/oraclelogo.png';
 import hiveLogo from '../../../../images/hivelogo.png';
+import impalaLogo from '../../../../images/impalalogo.png';
 import supersetLogo from '../../../../images/supersetlogo.png';
 import athenaLogo from '../../../../images/awsathenalogo.png';
 import mssqlLogo from '../../../../images/mssqllogo.png';
@@ -52,6 +53,8 @@ export const GLUE = 'glue';
 export const GLUE_URN = `urn:li:dataPlatform:${GLUE}`;
 export const HIVE = 'hive';
 export const HIVE_URN = `urn:li:dataPlatform:${HIVE}`;
+export const IMPALA = 'impala';
+export const IMPALA_URN = `urn:li:dataPlatform:${IMPALA}`;
 export const KAFKA = 'kafka';
 export const KAFKA_URN = `urn:li:dataPlatform:${KAFKA}`;
 export const LOOKER = 'looker';
@@ -111,6 +114,7 @@ export const PLATFORM_URN_TO_LOGO = {
     [FEAST_URN]: feastLogo,
     [GLUE_URN]: glueLogo,
     [HIVE_URN]: hiveLogo,
+    [IMPALA_URN]: impalaLogo,
     [KAFKA_URN]: kafkaLogo,
     [LOOKER_URN]: lookerLogo,
     [MARIA_DB_URN]: mariadbLogo,

@@ -299,6 +299,20 @@ plugins: Dict[str, Set[str]] = {
         # https://github.com/great-expectations/great_expectations/pull/6149.
         "great-expectations != 0.15.23, != 0.15.24, != 0.15.25, != 0.15.26",
     },
+    "impala": sql_common
+    | {
+        # Acryl Data maintains a fork of PyHive
+        # - 0.6.11 adds support for table comments and column comments,
+        #   and also releases HTTP and HTTPS transport schemes
+        # - 0.6.12 adds support for Spark Thrift Server
+        "acryl-pyhive[hive]>=0.6.13",
+        "impyla",
+        "databricks-dbapi",
+        # Due to https://github.com/great-expectations/great_expectations/issues/6146,
+        # we cannot allow 0.15.{23-26}. This was fixed in 0.15.27 by
+        # https://github.com/great-expectations/great_expectations/pull/6149.
+        "great-expectations != 0.15.23, != 0.15.24, != 0.15.25, != 0.15.26",
+    },
     "iceberg": iceberg_common,
     "kafka": {*kafka_common, *kafka_protobuf},
     "kafka-connect": sql_common | {"requests", "JPype1"},
@@ -435,6 +449,7 @@ base_dev_requirements = {
             "tableau",
             "trino",
             "hive",
+            "impala",
             "starburst-trino-usage",
             "powerbi",
             "powerbi-report-server",
@@ -502,6 +517,7 @@ entry_points = {
         "sagemaker = datahub.ingestion.source.aws.sagemaker:SagemakerSource",
         "hana = datahub.ingestion.source.sql.hana:HanaSource",
         "hive = datahub.ingestion.source.sql.hive:HiveSource",
+        "impala = datahub.ingestion.source.sql.impala:ImpalaSource",
         "kafka = datahub.ingestion.source.kafka:KafkaSource",
         "kafka-connect = datahub.ingestion.source.kafka_connect:KafkaConnectSource",
         "ldap = datahub.ingestion.source.ldap:LDAPSource",
