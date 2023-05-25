@@ -1,0 +1,17 @@
+source:
+  type: hive
+  config:
+    # Coordinates
+    host_port: localhost:21050
+    sqlalchemy_uri: impala://localhost:21050
+
+    # Credentials
+    username: user # optional
+    password: pass # optional
+
+    # For more details on authentication, see the impyla docs:
+
+
+sink:
+  # sink configs
+
